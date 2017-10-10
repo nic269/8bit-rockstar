@@ -41,7 +41,7 @@ const plugins = [
     template: `${APP_DIR}/index.tpl.ejs`
   }),
   new CopyWebpackPlugin([
-    { from: 'assets/images', to: `${BUILD_DIR}/assets/images` }
+    { from: `${APP_DIR}/assets/images`, to: `${BUILD_DIR}/assets/images` }
   ]),
   new webpack.optimize.CommonsChunkPlugin({
     name: 'vendors',
@@ -74,13 +74,14 @@ const config = {
     extensions: ['.js', '.jsx'],
     alias: {
       '*': 'react',
-      '@App': resolve('src/'),
+      '@App': APP_DIR,
       '@Container': resolve('src/components/container'),
       '@Presentational': resolve('src/components/presentational'),
       '@Action': resolve('src/redux/actions'),
       '@Reducer': resolve('src/redux/reducers'),
       '@Asset': resolve('src/assets'),
-      '@Api': resolve('src/api')
+      '@Api': resolve('src/api'),
+      '@Util': resolve('src/utils')
     }
   },
   devtool: isDev ? 'eval-source-map' : 'cheap-module-source-map',
