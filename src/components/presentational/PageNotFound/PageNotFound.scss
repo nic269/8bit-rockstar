@@ -1,0 +1,29 @@
+.not-found {
+  text-align: center;
+
+  &__title {
+    position: relative;
+    display: inline-block;
+    text-transform: uppercase;
+
+    &::after {
+      content: "";
+      height: 1px;
+      width: 4rem;
+      position: absolute;
+      bottom: -1rem;
+      left: 50%;
+      -ms-transform: translateX(-50%);
+      transform: translateX(-50%);
+      background-color: #009861;
+    }
+  }
+
+  &__copyright {
+    font-weight: bold;
+  }
+
+  .btn {
+    cursor: pointer;
+  }
+}

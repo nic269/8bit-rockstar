@@ -1,0 +1,33 @@
+{
+  "extends": "stylelint-config-standard",
+  "plugins": [
+    "stylelint-selector-bem-pattern"
+  ],
+  "rules": {
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": [
+          "global",
+          "local"
+        ]
+      }
+    ],
+    "property-no-unknown": [
+      true,
+      {
+        "ignoreProperties": [
+          "composes"
+        ]
+      }
+    ],
+    "plugin/selector-bem-pattern": {
+      "componentName": "[a-z]+",
+      "componentSelectors": {
+        "initial": "^\\.{componentName}(?:__[a-z]+)?$"
+      },
+      "utilitySelectors": "^\\.util-[a-z]+$"
+    },
+    "block-no-empty": null
+  }
+}
