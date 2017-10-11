@@ -7,12 +7,11 @@ import {
   editAddressAction,
   getAddressListAction
 } from '@Action';
-// import * as addAddressAction from '@Action';
-// import * as editAddressAction from '@Action';
-// import { watchAddressAddedEvent } from '@Action/addressAdded';
 import {
   AddressList,
-  Loading
+  Loading,
+  AddressListForm,
+  AddressListMap
 } from '@Presentational';
 
 class HomeContainer extends PureComponent {
@@ -42,7 +41,6 @@ class HomeContainer extends PureComponent {
 
   render() {
     const { addressList, getAddressListRequest } = this.props;
-    console.log(this.props);
     return (
       <div className="home">
         {
@@ -74,6 +72,10 @@ class HomeContainer extends PureComponent {
             country: 'VN'
           })}
         >edit address</button>
+        <AddressListForm
+          addAddress={this.addAddress}
+        />
+        <AddressListMap />
       </div>
     );
   }
