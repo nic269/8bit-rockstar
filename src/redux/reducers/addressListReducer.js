@@ -10,7 +10,7 @@ function addressListReducer(state = initialState, action) {
       return {
         ...state,
         getAddressListRequest: true,
-        getAddressListFail: false,
+        getAddressListFail: null,
         addressList: []
       };
     case type.GET_ADDRESS_LIST.SUCCESS:
@@ -29,37 +29,43 @@ function addressListReducer(state = initialState, action) {
       return {
         ...state,
         addAddressInProgress: true,
-        addAddressFail: false
+        addAddressFail: null,
+        addAddressSuccess: false
       };
     case type.ADD_ADDRESS.SUCCESS:
       return {
         ...state,
         addAddressInProgress: false,
-        addressList: action.data
+        addressList: action.data,
+        addAddressSuccess: true
       };
     case type.ADD_ADDRESS.FAILURE:
       return {
         ...state,
         addAddressInProgress: false,
         addAddressFail: action.error,
+        addAddressSuccess: false
       };
     case type.EDIT_ADDRESS.REQUEST:
       return {
         ...state,
         editAddressInProgress: true,
-        editAddressFail: false
+        editAddressFail: null,
+        editAddressuccess: false
       };
     case type.EDIT_ADDRESS.SUCCESS:
       return {
         ...state,
         editAddressInProgress: false,
-        addressList: action.data
+        addressList: action.data,
+        editAddressuccess: true
       };
     case type.EDIT_ADDRESS.FAILURE:
       return {
         ...state,
         editAddressInProgress: false,
         editAddressFail: action.error,
+        editAddressuccess: false
       };
     case type.ADDRESS_ADDED:
       return {

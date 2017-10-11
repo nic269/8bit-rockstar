@@ -114,6 +114,9 @@ a {
 
 .pt-spinner:not(.pt-svg-spinner) {
   display: inline-block;
+  transform: translateX(-50%);
+  position: absolute;
+  left: 50%;
 }
 
 .pt-spinner:not(.pt-svg-spinner) .pt-spinner-svg-container {

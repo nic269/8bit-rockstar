@@ -4,12 +4,14 @@ import {
   combineReducers,
   compose,
 } from 'redux';
+import { routerReducer } from 'react-router-redux';
 import thunk from 'redux-thunk';
 import * as appReducers from './reducers';
 
 const store = createStore(
   combineReducers({
-    ...appReducers
+    ...appReducers,
+    routing: routerReducer
   }),
   compose(
     applyMiddleware(thunk),

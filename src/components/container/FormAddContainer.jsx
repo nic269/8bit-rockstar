@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import t from 'tcomb-form';
-
-const Form = t.form.Form;
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { addAddressAction } from '@Action';
+import { AddressForm } from '@Presentational';
 
 const getTypes = (value = null) => {
   const types = {
@@ -23,7 +25,7 @@ const getTypes = (value = null) => {
   return t.struct(types);
 };
 
-const formOptions = {
+const options = {
   fields: {
     street: {
       auto: 'none',
@@ -69,12 +71,12 @@ const formOptions = {
   }
 };
 
-class AddressListForm extends PureComponent {
+class FormAddContainer extends PureComponent {
   state = {
     types: getTypes(),
     value: null
   }
-  
+
   onChange = (value) => {
     this.setState({
       types: getTypes(value),
@@ -82,11 +84,11 @@ class AddressListForm extends PureComponent {
     });
   }
   
-  onSubmit = (e) => {
+  onSubmit = (e, form) => {
     e.preventDefault();
-    const value = this.addressForm.getValue();
+    const value = form.getValue();
     if (value) {
-      this.props.addAddress(value);
+      this.props.addAddressAction(value);
       this.resetForm();
     }
   }
@@ -99,25 +101,36 @@ class AddressListForm extends PureComponent {
   }
   
   render() {
+    const {
+      onRequest,
+      onSuccess
+    } = this.props;
+
     return (
-      <form onSubmit={this.onSubmit}>
-        <Form
-          ref={(addressForm) => { this.addressForm = addressForm; }}
-          type={this.state.types}
-          options={formOptions}
-          value={this.state.value}
-          onChange={this.onChange}
-        />
-        <div className="form-group">
-          <button type="submit" className="btn btn-primary">Save</button>
-        </div>
-      </form>
+      <AddressForm
+        types={this.state.types}
+        options={options}
+        onSubmit={this.onSubmit}
+        onChange={this.onChange}
+        value={this.state.value}
+        onRequest={onRequest}
+        onSuccess={onSuccess}
+      />
     );
   }
 }
 
-AddressListForm.propTypes = {
-  addAddress: PropTypes.func
+FormAddContainer.propTypes = {
+  addAddressAction: PropTypes.func,
+  onRequest: PropTypes.bool,
+  onSuccess: PropTypes.bool
 };
 
-export default AddressListForm;
+const mapStateToProps = () => ({});
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators({
+    addAddressAction
+  }, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormAddContainer);
