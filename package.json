@@ -4,8 +4,8 @@
   "description": "Technical Test",
   "main": "src/index.jsx",
   "scripts": {
-    "dev": "NODE_ENV=development webpack-dev-server --progress",
-    "build": "yarn clean && NODE_ENV=production webpack",
+    "start": "NODE_ENV=development webpack-dev-server --progress",
+    "build": "npm run clean && NODE_ENV=production webpack",
     "clean": "rimraf './public/'"
   },
   "private": true,
@@ -16,6 +16,7 @@
   "author": "Tuan Anh",
   "license": "ISC",
   "devDependencies": {
+    "copy-webpack-plugin": "^4.1.1",
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.1",
@@ -48,7 +49,6 @@
   "dependencies": {
     "axios": "^0.16.2",
     "bootstrap": "4.0.0-beta",
-    "copy-webpack-plugin": "^4.1.1",
     "firebase": "^4.5.0",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
