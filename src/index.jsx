@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, IndexRoute, Route, browserHistory } from 'react-router';
-import ExchangeContainer from '@Container/ExchangeContainer';
+import HomeContainer from '@Container/HomeContainer';
 import AboutContainer from '@Container/AboutContainer';
 import { PageNotFound } from '@Presentational';
 import store from './redux/store';
@@ -14,7 +14,7 @@ render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={Application}>
-        <IndexRoute component={ExchangeContainer} />
+        <IndexRoute component={HomeContainer} />
         <Route path="about" component={AboutContainer} />
         <Route path="*" component={PageNotFound} />
       </Route>

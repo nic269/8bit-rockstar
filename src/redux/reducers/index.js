@@ -1,1 +1,1 @@
-export exchangeReducer from './exchangeReducer';
+export addressListReducer from './addressListReducer';
