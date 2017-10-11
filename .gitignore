@@ -23,7 +23,7 @@ build/Release
 node_modules
 
 # Ignore build files
-public
+# public
 public.tar.gz
 public.zip
 .tmp

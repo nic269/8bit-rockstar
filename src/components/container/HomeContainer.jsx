@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Formsy from 'formsy-react';
 import {
   addAddressAction,
   editAddressAction,
@@ -11,7 +10,8 @@ import {
 import {
   AddressList,
   Loading,
-  FormsyInput
+  AddressListForm,
+  AddressListMap
 } from '@Presentational';
 
 class HomeContainer extends PureComponent {
@@ -41,7 +41,6 @@ class HomeContainer extends PureComponent {
 
   render() {
     const { addressList, getAddressListRequest } = this.props;
-    console.log(this.props);
     return (
       <div className="home">
         {
@@ -73,10 +72,10 @@ class HomeContainer extends PureComponent {
             country: 'VN'
           })}
         >edit address</button>
-        <Formsy.Form onSubmit={this.submit} className="custom-validation">
-          <FormsyInput name="test" title="test input" />
-          <button type="submit">Submit</button>
-        </Formsy.Form>
+        <AddressListForm
+          addAddress={this.addAddress}
+        />
+        <AddressListMap />
       </div>
     );
   }
