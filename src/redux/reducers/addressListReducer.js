@@ -10,39 +10,56 @@ function addressListReducer(state = initialState, action) {
       return {
         ...state,
         getAddressListRequest: true,
-        getAddressListFail: null,
+        getAddressListFail: false,
         addressList: []
       };
     case type.GET_ADDRESS_LIST.SUCCESS:
       return {
         ...state,
         getAddressListRequest: false,
-        addressList: action.data,
+        addressList: action.data
       };
     case type.GET_ADDRESS_LIST.FAILURE:
       return {
         ...state,
         getAddressListRequest: false,
-        getAddressListFail: action.error,
+        getAddressListFail: action.error
       };
     case type.ADD_ADDRESS.REQUEST:
       return {
         ...state,
         addAddressInProgress: true,
-        addAddressFail: false,
-        addAddressSuccess: false
+        addAddressFail: false
       };
     case type.ADD_ADDRESS.SUCCESS:
       return {
         ...state,
         addAddressInProgress: false,
-        addAddressSuccess: true
+        addressList: action.data
       };
     case type.ADD_ADDRESS.FAILURE:
       return {
         ...state,
         addAddressInProgress: false,
         addAddressFail: action.error,
+      };
+    case type.EDIT_ADDRESS.REQUEST:
+      return {
+        ...state,
+        editAddressInProgress: true,
+        editAddressFail: false
+      };
+    case type.EDIT_ADDRESS.SUCCESS:
+      return {
+        ...state,
+        editAddressInProgress: false,
+        addressList: action.data
+      };
+    case type.EDIT_ADDRESS.FAILURE:
+      return {
+        ...state,
+        editAddressInProgress: false,
+        editAddressFail: action.error,
       };
     case type.ADDRESS_ADDED:
       return {

@@ -2,9 +2,14 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as getAddressListAction from '@Action/getAddressListAction';
-import * as addAddressAction from '@Action/addAddressAction';
-import { watchAddressAddedEvent } from '@Action/addressAdded';
+import {
+  addAddressAction,
+  editAddressAction,
+  getAddressListAction
+} from '@Action';
+// import * as addAddressAction from '@Action';
+// import * as editAddressAction from '@Action';
+// import { watchAddressAddedEvent } from '@Action/addressAdded';
 import {
   AddressList,
   Loading
@@ -17,11 +22,14 @@ class HomeContainer extends PureComponent {
 
   componentWillMount = () => {
     this.props.getAddressListAction();
-    this.props.watchAddressAddedEvent();
   }
 
   addAddress = (address) => {
     this.props.addAddressAction(address);
+  }
+
+  editAddress = (address) => {
+    this.props.editAddressAction('-Kw8l7oajNTVTaLrWaB8', address);
   }
 
   columns = [
@@ -57,6 +65,15 @@ class HomeContainer extends PureComponent {
             country: 'VN'
           })}
         >add address</button>
+        <button
+          onClick={() => this.editAddress({
+            street: '80 Tran Nhan Ton',
+            ward: 'ward 3',
+            district: 'district 15',
+            city: 'HCMC',
+            country: 'VN'
+          })}
+        >edit address</button>
       </div>
     );
   }
@@ -66,20 +83,17 @@ HomeContainer.propTypes = {
   addressList: PropTypes.array,
   getAddressListAction: PropTypes.func,
   addAddressAction: PropTypes.func,
-  watchAddressAddedEvent: PropTypes.func,
+  editAddressAction: PropTypes.func,
   getAddressListRequest: PropTypes.bool
 };
 
 const mapStateToProps = state => ({ ...state.addressListReducer });
-const mapDispatchToProps = (dispatch) => {
-  // watchAddressAddedEvent(dispatch);
-  return ({
-    ...bindActionCreators({
-      ...getAddressListAction,
-      ...addAddressAction,
-      watchAddressAddedEvent
-    }, dispatch)
-  });
-};
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators({
+    getAddressListAction,
+    addAddressAction,
+    editAddressAction
+  }, dispatch)
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);
