@@ -6,3 +6,36 @@ body {
 * {
   box-sizing: border-box;
 }
+
+.home {
+  &__header {
+    text-align: center;
+  }
+
+  &__title {
+    position: relative;
+    display: inline-block;
+    text-transform: uppercase;
+
+    &::after {
+      content: "";
+      height: 1px;
+      width: 4rem;
+      position: absolute;
+      bottom: -1rem;
+      left: 50%;
+      -ms-transform: translateX(-50%);
+      transform: translateX(-50%);
+      background-color: #009861;
+    }
+  }
+
+  &__link {
+    text-align: center;
+    margin-top: 20px;
+
+    .btn {
+      cursor: pointer;
+    }
+  }
+}

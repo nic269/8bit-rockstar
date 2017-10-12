@@ -7,3 +7,8 @@ export const GG_FIRE_BASE_INFO = {
   storageBucket: 'bit-rockstar.appspot.com',
   messagingSenderId: '93200235925'
 };
+
+export const CENTER_DEFAULT = { // Hochiminh
+  lat: 10.823099,
+  lng: 106.629664
+};

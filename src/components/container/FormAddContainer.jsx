@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import t from 'tcomb-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Button from 'material-ui/Button';
 import { addAddressAction } from '@Action';
 import { AddressForm } from '@Presentational';
+import AddressMapContainer from './AddressMapContainer';
 
 const getTypes = (value = null) => {
   const types = {
@@ -74,7 +76,8 @@ const options = {
 class FormAddContainer extends PureComponent {
   state = {
     types: getTypes(),
-    value: null
+    value: null,
+    useMap: false
   }
 
   onChange = (value) => {
@@ -88,9 +91,20 @@ class FormAddContainer extends PureComponent {
     e.preventDefault();
     const value = form.getValue();
     if (value) {
-      this.props.addAddressAction(value);
+      this.saveData(value);
       this.resetForm();
     }
+  }
+
+  saveData = (address) => {
+    this.props.addAddressAction(address);
+    this.props.onRequestClose();
+  }
+
+  toggleUseMap = () => {
+    this.setState({
+      useMap: !this.state.useMap
+    });
   }
 
   resetForm = () => {
@@ -107,21 +121,42 @@ class FormAddContainer extends PureComponent {
     } = this.props;
 
     return (
-      <AddressForm
-        types={this.state.types}
-        options={options}
-        onSubmit={this.onSubmit}
-        onChange={this.onChange}
-        value={this.state.value}
-        onRequest={onRequest}
-        onSuccess={onSuccess}
-      />
+      <div className="add-form">
+        <Button 
+          raised
+          color="primary"
+          onClick={this.toggleUseMap}
+        >
+          Toggle use map
+        </Button>
+        {
+          !this.state.useMap &&
+          <AddressForm
+            types={this.state.types}
+            options={options}
+            onSubmit={this.onSubmit}
+            onChange={this.onChange}
+            value={this.state.value}
+            onRequest={onRequest}
+            onSuccess={onSuccess}
+          />
+        }
+        {
+          this.state.useMap &&
+          <AddressMapContainer
+            saveData={this.saveData}
+            onRequest={onRequest}
+            onSuccess={onSuccess}
+          />
+        }
+      </div>
     );
   }
 }
 
 FormAddContainer.propTypes = {
   addAddressAction: PropTypes.func,
+  onRequestClose: PropTypes.func,
   onRequest: PropTypes.bool,
   onSuccess: PropTypes.bool
 };

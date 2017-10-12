@@ -1,0 +1,45 @@
+.address-map {
+  position: relative;
+  overflow: hidden;
+  margin: 30px 0;
+
+  .geosuggest {
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+
+    &__input-wrapper {
+      text-align: center;
+    }
+
+    &__input {
+      width: 250px;
+      height: 30px;
+      padding: 0 10px;
+      margin: 10px 0;
+      margin: 10px auto;
+      font-size: 0.8rem;
+    }
+
+    &__suggests {
+      background: #fff;
+      padding: 15px 0;
+      list-style-type: none;
+      margin: 0 auto;
+      max-width: 80%;
+
+      &.hidden {
+        display: none;
+      }
+    }
+
+    &__item {
+      cursor: pointer;
+      padding: 5px 10px;
+
+      &:hover {
+        background: #f4f4f4;
+      }
+    }
+  }
+}

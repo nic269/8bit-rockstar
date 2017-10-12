@@ -6,10 +6,10 @@ const About = ({ children }) => (
   <div className="about">
     <div className="container">
       <h2 className="about__title">
-        Currency converter
+        About Address list show
       </h2>
       <p className="about__desc">
-        This is currency converter web app. The data get from http://fixer.io/.
+        This is Address list show web app. use store from https://firebase.google.com/.
       </p>
       <p className="about__copyright">
         Design by Tuan Anh (tuananh.exp@gmail.com)

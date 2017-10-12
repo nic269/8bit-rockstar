@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import t from 'tcomb-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Button from 'material-ui/Button';
 import { editAddressAction } from '@Action';
 import { AddressForm } from '@Presentational';
+import AddressMapContainer from './AddressMapContainer';
 
 const getTypes = (value = null) => {
   const types = {
@@ -75,7 +77,8 @@ class FormEditContainer extends PureComponent {
   state = {
     types: getTypes(this.props.value),
     value: this.props.value,
-    id: this.props.id
+    id: this.props.id,
+    useMap: false
   }
 
   onChange = (value) => {
@@ -89,9 +92,19 @@ class FormEditContainer extends PureComponent {
     e.preventDefault();
     const value = form.getValue();
     if (value) {
-      this.props.editAddressAction(this.state.id, value);
-      // close
+      this.saveData(value);
     }
+  }
+
+  saveData = (address) => {
+    this.props.editAddressAction(this.state.id, address);
+    this.props.onRequestClose();
+  }
+
+  toggleUseMap = () => {
+    this.setState({
+      useMap: !this.state.useMap
+    });
   }
   
   render() {
@@ -101,21 +114,42 @@ class FormEditContainer extends PureComponent {
     } = this.props;
 
     return (
-      <AddressForm
-        types={this.state.types}
-        options={options}
-        onSubmit={this.onSubmit}
-        onChange={this.onChange}
-        value={this.state.value}
-        onRequest={onRequest}
-        onSuccess={onSuccess}
-      />
+      <div className="edit-form">
+        <Button 
+          raised
+          color="primary"
+          onClick={this.toggleUseMap}
+        >
+          Toggle use map
+        </Button>
+        {
+          !this.state.useMap &&
+          <AddressForm
+            types={this.state.types}
+            options={options}
+            onSubmit={this.onSubmit}
+            onChange={this.onChange}
+            value={this.state.value}
+            onRequest={onRequest}
+            onSuccess={onSuccess}
+          />
+        }
+        {
+          this.state.useMap &&
+          <AddressMapContainer
+            saveData={this.saveData}
+            onRequest={onRequest}
+            onSuccess={onSuccess}
+          />
+        }
+      </div>
     );
   }
 }
 
 FormEditContainer.propTypes = {
   editAddressAction: PropTypes.func,
+  onRequestClose: PropTypes.func,
   value: PropTypes.object,
   id: PropTypes.string,
   onRequest: PropTypes.bool,

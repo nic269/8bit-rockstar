@@ -127,12 +127,17 @@ const config = {
           {
             loader: 'postcss-loader',
             options: {
-              plugins: (loader) => [
-                require('autoprefixer'),
+              plugins: () => [
+                require('autoprefixer') // eslint-disable-line
               ]
             }
           }
         ]
+      },
+      {
+        test: /\.(jpg|jpeg|gif|png|woff|woff2|eot|otf|ttf|svg|ico)$/,
+        use: 'file-loader?name=[path][name].[ext]',
+        exclude: /node_modules/,
       }
     ]
   },

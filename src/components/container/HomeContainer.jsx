@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -20,8 +21,7 @@ import {
 } from '@Action';
 import {
   AddressListTable,
-  Loading,
-  AddressListMap
+  Loading
 } from '@Presentational';
 import FormAddContainer from './FormAddContainer';
 import FormEditContainer from './FormEditContainer';
@@ -56,6 +56,10 @@ class HomeContainer extends PureComponent {
     this.props.getAddressListAction();
   }
 
+  toggleDialog = (dialogName) => {
+    this.setState({ [dialogName]: !this.state[dialogName] });
+  }
+
   activeEditing = (id, formValue) => {
     this.setState({
       formIdEditing: id,
@@ -63,10 +67,6 @@ class HomeContainer extends PureComponent {
     }, () => {
       this.toggleDialog('editingDialog');
     });
-  }
-
-  toggleDialog = (dialogName) => {
-    this.setState({ [dialogName]: !this.state[dialogName] });
   }
 
   columns = [
@@ -101,78 +101,94 @@ class HomeContainer extends PureComponent {
     } = this.props;
     return (
       <div className="home">
-        {
-          getAddressListRequest &&
-          <Loading />
-        }
-        {
-          !getAddressListRequest && addressList.length > 0 &&
-          <AddressListTable
-            addressList={addressList}
-            columns={this.columns}
-            activeEditing={this.activeEditing}
-          />
-        }
-        <AddressListMap />
-        
-        <CSVLink data={addressList} filename={'8bit-rockstar.csv'} >
-          <Tooltip placement="top" title="Download CSV">
+        <div className="home__header">
+          <h2 className="home__title">
+            Address list show
+          </h2>
+        </div>
+        <div className="home__body">
+          {
+            getAddressListRequest &&
+            <Loading />
+          }
+          {
+            !getAddressListRequest && addressList.length > 0 &&
+            <div className="home__content">
+              <AddressListTable
+                addressList={addressList}
+                columns={this.columns}
+                activeEditing={this.activeEditing}
+              />
+              <div className="home__link">
+                <button
+                  className="btn btn-primary"
+                  onClick={() => browserHistory.push('/about')}
+                >
+                  Go to About
+                </button>
+              </div>
+            </div>
+          }
+          <CSVLink data={addressList} filename={'8bit-rockstar.csv'} >
+            <Tooltip placement="top" title="Download CSV">
+              <Button
+                fab
+                color="accent"
+                aria-label="download CSV"
+                className={classes.downloadButton}
+              >
+                <GetAppIcon />
+              </Button>
+            </Tooltip>
+          </CSVLink>
+          
+          <Tooltip placement="bottom" title="Add address">
             <Button
               fab
-              color="accent"
-              aria-label="download CSV"
-              className={classes.downloadButton}
+              color="primary"
+              aria-label="add"
+              className={classes.button}
+              onClick={() => this.toggleDialog('addingDialog')}
             >
-              <GetAppIcon />
+              <AddIcon />
             </Button>
           </Tooltip>
-        </CSVLink>
-        
-        <Tooltip placement="bottom" title="Add address">
-          <Button
-            fab
-            color="primary"
-            aria-label="add"
-            className={classes.button}
-            onClick={() => this.toggleDialog('addingDialog')}
+          <Dialog
+            className="editingDialog"
+            onRequestClose={() => this.toggleDialog('editingDialog')}
+            open={this.state.editingDialog}
           >
-            <AddIcon />
-          </Button>
-        </Tooltip>
+            <DialogTitle>
+              Editing [{this.state.formIdEditing}]
+            </DialogTitle>
+            <DialogContent>
+              <FormEditContainer
+                id={this.state.formIdEditing}
+                value={this.state.formValueEditing}
+                onRequest={editAddressInProgress}
+                onSuccess={editAddressuccess}
+                onRequestClose={() => this.toggleDialog('editingDialog')}
+              />
+            </DialogContent>
+          </Dialog>
 
-        <Dialog
-          className="editingDialog"
-          onRequestClose={() => this.toggleDialog('editingDialog')}
-          open={this.state.editingDialog}
-        >
-          <DialogTitle>
-            Editing [{this.state.formIdEditing}]
-          </DialogTitle>
-          <DialogContent>
-            <FormEditContainer
-              id={this.state.formIdEditing}
-              value={this.state.formValueEditing}
-              onRequest={editAddressInProgress}
-              onSuccess={editAddressuccess}
-            />
-          </DialogContent>
-        </Dialog>
-
-        <Dialog
-          className="addingDialog"
-          onRequestClose={() => this.toggleDialog('addingDialog')}
-          open={this.state.addingDialog}
-        >
-          <DialogTitle>
-            Adding address
-          </DialogTitle>
-          <DialogContent>
-            <FormAddContainer
-              onRequest={addAddressInProgress}
-              onSuccess={addAddressSuccess}
-            />
-          </DialogContent>
-        </Dialog>
+          <Dialog
+            className="addingDialog"
+            onRequestClose={() => this.toggleDialog('addingDialog')}
+            open={this.state.addingDialog}
+          >
+            <DialogTitle>
+              Adding address
+            </DialogTitle>
+            <DialogContent>
+              <FormAddContainer
+                onRequest={addAddressInProgress}
+                onSuccess={addAddressSuccess}
+                onRequestClose={() => this.toggleDialog('addingDialog')}
+              />
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
     );
   }
