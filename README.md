@@ -26,5 +26,12 @@ $ yarn or npm install
 To run project on your localhost (will use 3000 port)
 
 ```
-$ yarn dev or npm run dev
+$ yarn start or npm run start
+```
+### Build
+
+To build project (build to /public folder)
+
+```
+$ yarn build or npm run build
 ```
