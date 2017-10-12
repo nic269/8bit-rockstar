@@ -27,6 +27,7 @@ const PlacesWithStandaloneSearchBox = compose(
             places,
           });
 
+          console.log(this.props);
           this.props.setData(places);
         },
       });
@@ -77,13 +78,50 @@ const PlacesWithStandaloneSearchBox = compose(
 
 class AddressListMap extends PureComponent {
   setData = (data) => {
-    console.log(data);
-    console.log('address_components ', data[0].address_components);
-    data.map(({
-      place_id: placeId,
-      formatted_address: formattedAddress,
-      geometry: { location }
-    }) => console.log({ placeId, formattedAddress, location }));
+    this.a();
+    console.log(this.placeToAddress(data[0].address_components));
+    // data.map(({
+    //   place_id: placeId,
+    //   formatted_address: formattedAddress,
+    //   geometry: { location }
+    // }) => console.log({ placeId, formattedAddress, location }));
+  }
+
+  a = () => {
+    console.log(this.props);
+  }
+
+  placeToAddress = (addressComponents) => {
+    const address = {};
+    addressComponents.forEach((c) => {
+      switch (c.types[0]) {
+        // case 'street_number':
+        //   address.streetNumber = c;
+        //   break;
+        case 'route':
+          address.street = c.long_name;
+          break;
+        case 'sublocality_level_1': case 'sublocality':
+          address.ward = c.long_name;
+          break;
+        case 'administrative_area_level_2':
+          address.district = c.long_name;
+          break;
+        case 'neighborhood': case 'locality': case 'administrative_area_level_1':
+          address.city = c.long_name;
+          break;
+        // case 'postal_code':
+        //   address.zip = c.long_name;
+        //   break;
+        case 'country':
+          address.country = c.long_name;
+          break;
+        default:
+          break;
+      }
+    });
+
+    return address;
   }
 
   render() {
