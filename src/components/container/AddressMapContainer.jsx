@@ -142,7 +142,7 @@ class AddressMapContainer extends PureComponent {
         <Map
           onMapLoad={this.onMapLoadHandler}
           containerElement={
-            <div style={{ height: '300px', width: '500px' }} />
+            <div className="map__wrapper" />
           }
           mapElement={
             <div style={{ height: '100%', width: '100%' }} />

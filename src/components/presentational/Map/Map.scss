@@ -42,4 +42,15 @@
       }
     }
   }
+
+  .map__wrapper {
+    height: 300px;
+    width: 500px;
+  }
+
+  @media screen and (max-width: 600px) {
+    .map__wrapper {
+      width: 300px;
+    }
+  }
 }

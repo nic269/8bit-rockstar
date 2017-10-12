@@ -30,14 +30,14 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
     position: 'fixed',
-    bottom: '5rem',
+    bottom: '2rem',
     right: '1rem',
     boxShadow: 'none'
   },
   downloadButton: {
     margin: theme.spacing.unit,
     position: 'fixed',
-    bottom: '9rem',
+    bottom: '6rem',
     right: '1rem',
     boxShadow: 'none'
   }

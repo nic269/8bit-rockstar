@@ -21,7 +21,15 @@ class Map extends PureComponent {
         ref={onMapLoad}
         defaultZoom={14}
         defaultCenter={center}
-        options={{ gestureHandling: 'cooperative', streetViewControl: false, scrollwheel: false }}
+        options={{
+          gestureHandling: 'cooperative',
+          streetViewControl: false,
+          scrollwheel: false,
+          scaleControl: false,
+          mapTypeControl: false,
+          panControl: false,
+          rotateControl: false
+        }}
       >
         {
           center &&
