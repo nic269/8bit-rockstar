@@ -127,67 +127,67 @@ class HomeContainer extends PureComponent {
                   Go to About
                 </button>
               </div>
+              <CSVLink data={addressList} filename={'8bit-rockstar.csv'} >
+                <Tooltip placement="top" title="Download CSV">
+                  <Button
+                    fab
+                    color="accent"
+                    aria-label="download CSV"
+                    className={classes.downloadButton}
+                  >
+                    <GetAppIcon />
+                  </Button>
+                </Tooltip>
+              </CSVLink>
+              
+              <Tooltip placement="bottom" title="Add address">
+                <Button
+                  fab
+                  color="primary"
+                  aria-label="add"
+                  className={classes.button}
+                  onClick={() => this.toggleDialog('addingDialog')}
+                >
+                  <AddIcon />
+                </Button>
+              </Tooltip>
+              <Dialog
+                className="editingDialog"
+                onRequestClose={() => this.toggleDialog('editingDialog')}
+                open={this.state.editingDialog}
+              >
+                <DialogTitle>
+                  Editing [{this.state.formIdEditing}]
+                </DialogTitle>
+                <DialogContent>
+                  <FormEditContainer
+                    id={this.state.formIdEditing}
+                    value={this.state.formValueEditing}
+                    onRequest={editAddressInProgress}
+                    onSuccess={editAddressuccess}
+                    onRequestClose={() => this.toggleDialog('editingDialog')}
+                  />
+                </DialogContent>
+              </Dialog>
+    
+              <Dialog
+                className="addingDialog"
+                onRequestClose={() => this.toggleDialog('addingDialog')}
+                open={this.state.addingDialog}
+              >
+                <DialogTitle>
+                  Adding address
+                </DialogTitle>
+                <DialogContent>
+                  <FormAddContainer
+                    onRequest={addAddressInProgress}
+                    onSuccess={addAddressSuccess}
+                    onRequestClose={() => this.toggleDialog('addingDialog')}
+                  />
+                </DialogContent>
+              </Dialog>
             </div>
           }
-          <CSVLink data={addressList} filename={'8bit-rockstar.csv'} >
-            <Tooltip placement="top" title="Download CSV">
-              <Button
-                fab
-                color="accent"
-                aria-label="download CSV"
-                className={classes.downloadButton}
-              >
-                <GetAppIcon />
-              </Button>
-            </Tooltip>
-          </CSVLink>
-          
-          <Tooltip placement="bottom" title="Add address">
-            <Button
-              fab
-              color="primary"
-              aria-label="add"
-              className={classes.button}
-              onClick={() => this.toggleDialog('addingDialog')}
-            >
-              <AddIcon />
-            </Button>
-          </Tooltip>
-          <Dialog
-            className="editingDialog"
-            onRequestClose={() => this.toggleDialog('editingDialog')}
-            open={this.state.editingDialog}
-          >
-            <DialogTitle>
-              Editing [{this.state.formIdEditing}]
-            </DialogTitle>
-            <DialogContent>
-              <FormEditContainer
-                id={this.state.formIdEditing}
-                value={this.state.formValueEditing}
-                onRequest={editAddressInProgress}
-                onSuccess={editAddressuccess}
-                onRequestClose={() => this.toggleDialog('editingDialog')}
-              />
-            </DialogContent>
-          </Dialog>
-
-          <Dialog
-            className="addingDialog"
-            onRequestClose={() => this.toggleDialog('addingDialog')}
-            open={this.state.addingDialog}
-          >
-            <DialogTitle>
-              Adding address
-            </DialogTitle>
-            <DialogContent>
-              <FormAddContainer
-                onRequest={addAddressInProgress}
-                onSuccess={addAddressSuccess}
-                onRequestClose={() => this.toggleDialog('addingDialog')}
-              />
-            </DialogContent>
-          </Dialog>
         </div>
       </div>
     );
